@@ -43,4 +43,4 @@ when click lable on bar, map will move to location and change color of marker to
 ![2](images/2.png)
 
 When click location icon, map will move to location
-![3](images/2.png)
+![3](images/3.png)
