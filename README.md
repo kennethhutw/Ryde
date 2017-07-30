@@ -27,11 +27,14 @@ if(env === 'development'){
     process.env.MONGODB_URI = 'mongodb://localhost:27017/RydeTest';
 }
 `````
+Step4 : if you don't want to wait for 5 minutes, you can change rule.minute to rule.second.
 
+5 minutes : rule.minute = new schedule.Range(0, 59, 5);
+5 second : rule.second = new schedule.Range(0, 59, 5);
 
-Step4 : node server/server.js
+Step5 : node server/server.js
 
-Step5 : open localhost:3000 in browser
+Step6 : open localhost:3000 in browser
 
 
 
