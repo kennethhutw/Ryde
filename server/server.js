@@ -10,9 +10,23 @@ var {mongoose} = require('./db/mongoose');
 var {trafficimg} = require('./models/trafficImg');
 var schedule = require('node-schedule');
 
-
 var app = express();
+
+app.use(express.static(__dirname +'/../'));
+app.set('view engine', 'ejs');
+var itemRouter = express.Router();
+
 const port = process.env.PORT || 3000;
+
+
+var options = {
+    host:'datamall2.mytransport.sg',
+    path:'/ltaodataservice/Traffic-Images',
+     headers: {
+    'accept': 'application/json',
+    'AccountKey': 'AccountKey'
+  }
+}
 
 app.use(bodyParser.json());
 
@@ -23,7 +37,8 @@ app.post('/trafficImage',(req, res) => {
          Longitude : req.body.Longitude,
          ImageLink : req.body.ImageLink
      });
-        console.log(trafficImg);
+
+     console.log(trafficImg);
     
 
      trafficImg.save().then((doc) => {
@@ -59,32 +74,18 @@ app.get('/trafficImage/:id',(req, res) =>{
 
 });
 
-var options = {
-    host:'datamall2.mytransport.sg',
-    path:'/ltaodataservice/Traffic-Images',
-     headers: {
-    'accept': 'application/json',
-    'AccountKey': 'TKpt3178RxCAX5/k/Tmg3w=='
-  }
-}
+
 
 app.get('/Image',(req1, res1) =>{
     
     var req = http.get(options, function(res) {
-       // console.log('HEADERS: ' + JSON.stringify(res));
-
-        // Buffer the body entirely for processing as a whole.
         var bodyChunks = [];
         var respBody = [];
         res.on('data', function(chunk) {
-            // You can process streamed parts here...
-            bodyChunks.push(chunk);
-           
+            bodyChunks.push(chunk);    
         })
         .on('end', function() {
             var body = Buffer.concat(bodyChunks);
-            console.log('BODY value: ' + body);
-
             var obj = JSON.parse(body);
             obj.value.forEach(function(entry) {
                 console.log(entry);
@@ -103,13 +104,6 @@ app.get('/Image',(req1, res1) =>{
                     res.status(400).send(e);
                 });
             });
-           
-            // ...and/or process the entire body here.
-            // for(var i = 0; i < body.value.length;i++){
-            //     var entry = body.value[i];
-            //      console.log('entry : ' + entry);
-
-            // }
              
          res1.send(respBody);
         });
@@ -125,11 +119,11 @@ app.get('/Image',(req1, res1) =>{
 });
 var rule = new schedule.RecurrenceRule();
 
-rule.second = new schedule.Range(0, 59, 5);
+rule.minute = new schedule.Range(0, 59, 5);
 var j = schedule.scheduleJob(rule, function(){
      var currdatetime = new Date();
      console.log(currdatetime);
-     console.log('Get Data from datamall2!');
+     console.log(currdatetime +': Get Data from datamall!');
      var req = http.get(options, function(res) {
         var bodyChunks = [];
         var respBody = [];
@@ -139,8 +133,6 @@ var j = schedule.scheduleJob(rule, function(){
         })
         .on('end', function() {
             var body = Buffer.concat(bodyChunks);
-           // console.log('BODY value: ' + body);
-
             var obj = JSON.parse(body);
             obj.value.forEach(function(entry) {
                // console.log(entry);
@@ -168,9 +160,41 @@ var j = schedule.scheduleJob(rule, function(){
     });
 });
 
+
+
+app.get('/', function(req1, res1){
+      var req = http.get(options, function(res) {
+        var bodyChunks = [];
+        var respBody = [];
+        res.on('data', function(chunk) {
+            bodyChunks.push(chunk);
+           
+        })
+        .on('end', function() {
+            var body = Buffer.concat(bodyChunks);
+
+            var obj = JSON.parse(body);
+            obj.value.forEach(function(entry) {
+                  var trafficImg = new trafficimg({
+                    CameraID : entry.CameraID,
+                    Latitude : entry.Latitude,
+                    Longitude : entry.Longitude,
+                    ImageLink : entry.ImageLink
+                });
+                respBody.push(trafficImg);
+            });
+            res1.render('index', {data: respBody});
+        });
+    });
+
+    req.on('error', function(e) {
+        console.log('ERROR: ' + e.message);
+    });
+  
+})
 app.listen(port, () =>{
     var currdatetime = new Date();
-console.log(currdatetime);
+    console.log(currdatetime);
     console.log(`Started up at port ${port}`);
 });
 

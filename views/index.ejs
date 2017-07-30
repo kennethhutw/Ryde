@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Panel Example</title>
+	<meta charset="utf-8" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+	<link rel="stylesheet" href="http://localhost/example/hoc/css/leaflet-sidebar.min.css" />
+	<link rel="stylesheet" href="/public/css/leaflet-panel.css" /> 
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
+	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+	<script src="http://matchingnotes.com/javascripts/leaflet-google.js"></script>
+  <script src="/public/leaflet-panel.js"></script> 
+  <link rel="stylesheet" href="/public/bootstrap.min.css" /> 
+  <script src="/public/bootstrap.min.js"></script>
+ 
+	<style type="text/css">
+		html {
+    height: 100%; 
+}
+
+body {
+    text-align: center;
+    height: 100%;
+}
+	    .leaflet-map-pane {
+    z-index: 1 !important;
+	background: #ddd;
+}
+		</style>
+
+</head>
+<body>
+
+	<h3><a href="https://github.com/kennethhutw/leaflet-panel"><big>*</big> [Github]</a></h3>
+	<div id="map" style="width: 100%; height: 82%"></div>
+       <div class="panel panel-default panel-table">
+              <div class="panel-heading">
+                <div class="row">
+                  <div class="col col-xs-6">
+                    <h3 class="panel-title">Panel Heading</h3>
+                  </div>
+                  <div class="col col-xs-6 text-right">
+                    <button type="button" class="btn btn-sm btn-primary btn-create">Create New</button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <table class="table table-striped table-bordered table-list">
+                  <thead>
+                    <tr>
+                        <th><em class="fa fa-cog"></em></th>
+                        <th class="hidden-xs">CameraID</th>
+                        <th>location</th>
+                        <th>ImageLink</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                           <% data.forEach(function(item){ %>
+                              <tr>
+                              <td align="center">
+                                <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                              </td>
+                              <td class="hidden-xs"><%=item.CameraID%></td>
+                              <td><a class="btn btn-default btn-xs" style="height:24px;width:24px;" 
+                                 title="Pan Map to Coordinate" onclick='panToCoordinateOnMap(<%=item.Latitude%>,<%=item.Longitude%>);'><i class="fa fa-globe"></i></a></td>
+                              <td><%=item.ImageLink%></td>
+                            </tr>
+                            <% }); %>
+                  </tbody>
+                </table>
+            
+              </div>
+              <div class="panel-footer">
+               
+              </div>
+            </div>
+              <script src="/public/app.js"></script>   
+</body>
+</html>
