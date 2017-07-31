@@ -47,3 +47,9 @@ when click lable on bar, map will move to location and change color of marker to
 
 When click location icon, map will move to location
 ![3](images/3.png)
+
+List all data
+![4](images/4.png)
+
+Search by CameraID
+![5](images/5.png)
