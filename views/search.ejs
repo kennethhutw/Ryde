@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+    <style>
+        
+select { width: 400px; text-align:center; }
+select .lt { text-align:center; }
+select { text-indent: 5px; }
+</style>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+        	<link rel="stylesheet" href="/public/css/jquery.dataTables.min.css" /> 
+         <script src="/public/jquery.dataTables.min.js"></script> 
+    </header>
+
+    <main>
+        <div class="row">
+             <div class="signup col-md-12 col-xs-12 text-center" >
+            <select name="state" class="ddList">
+            <option value="">(please select a id)</option>
+             <option class="lt" value="--">none</option>
+              <% data.forEach(function(item){ %>
+                <option class="lt" value="<%=item.CameraID%>"><%=item.CameraID%></option>
+                             <li><%=item.CameraID%></li>
+                            <% }); %>
+         
+            </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="signup col-md-12 col-xs-12 text-center" >
+            <form action="" method="" id="signfrm" >
+            <h3 class="sign-h"><span id="sign-icon"><i class="fa fa-sign-in"></i></span>Image Data</h3>
+              <div class="form-group ">
+                  <span>CameraID</span>
+                <input type="text" class="form-control" id="CameraID_input" >
+                 </div>
+             <div class="form-group ">
+                  <span>Latitude</span>
+                <input type="text" class="form-control" id="Lat_input" >
+                </div>
+                 <div class="form-group ">
+                      <span>Longitude</span>
+                <input type="text" class="form-control" id="Long_input" >
+                </div>
+                 <div class="form-group ">
+                      <span>ImageLink</span>
+                <input type="text" class="form-control" id="Link_input">            
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+  <script src="/public/search.min.js"></script>   
+</body>
+</html>

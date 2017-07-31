@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+        	<link rel="stylesheet" href="/public/css/jquery.dataTables.min.css" /> 
+         <script src="/public/jquery.dataTables.min.js"></script> 
+    </header>
+
+    <main>
+        <div class="row">
+            <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+           <tr>
+                        <th><em class="fa fa-cog"></em></th>
+                        <th class="hidden-xs">CameraID</th>
+                        <th>location</th>
+                        <th>ImageLink</th>
+                    </tr> 
+        </thead>
+       
+        <tbody>
+              <% data.forEach(function(item){ %>
+                              <tr>
+                              <td align="center">
+                                <a class="btn btn-default"><em class="fa fa-pencil"></em></a>
+                                <a class="btn btn-danger"><em class="fa fa-trash"></em></a>
+                              </td>
+                              <td class="hidden-xs"><%=item.CameraID%></td>
+                              <td><a class="btn btn-default btn-xs" style="height:24px;width:24px;" 
+                                 title="Pan Map to Coordinate" onclick='panToCoordinateOnMap(<%=item.Latitude%>,<%=item.Longitude%>);'><i class="fa fa-globe"></i></a></td>
+                              <td><%=item.ImageLink%></td>
+                            </tr>
+                            <% }); %>
+        </div>
+        </tbody>
+    </table>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+<script>
+    $(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+</body>
+</html>

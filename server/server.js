@@ -24,7 +24,7 @@ var options = {
     path:'/ltaodataservice/Traffic-Images',
      headers: {
     'accept': 'application/json',
-    'AccountKey': 'AccountKey'
+    'AccountKey': 'TKpt3178RxCAX5/k/Tmg3w=='
   }
 }
 
@@ -52,7 +52,7 @@ app.post('/trafficImage',(req, res) => {
 });
 
 app.get('/trafficImage', (req, res) =>{
-    TrafficImg.find().then((trafficeimgs) =>{
+    trafficimg.find().then((trafficeimgs) =>{
         res.send({trafficeimgs});
     }, (e) =>{
         res.status(400).send(e);
@@ -62,7 +62,7 @@ app.get('/trafficImage', (req, res) =>{
 app.get('/trafficImage/:id',(req, res) =>{
     var id = req.params.id;
 
-    TrafficImg.findById(id).then((img) =>{
+    trafficimg.findOne({"CameraID": id}).then((img) =>{
         if(!img){
             return res.status(404).send();
         }
@@ -191,7 +191,32 @@ app.get('/', function(req1, res1){
         console.log('ERROR: ' + e.message);
     });
   
-})
+});
+
+
+ app.get('/list', function(req, res) {
+    
+     trafficimg.find().limit(50).then((data) => {
+         console.log("length" + data.length);
+        res.render('list', {data: data});
+    }, (e) => {
+        res.status(400).send(e);
+    });
+ });
+
+  app.get('/search', function(req, res) {
+    
+     trafficimg.find().limit(50).then((data) => {
+         console.log("length" + data.length);
+        res.render('search', {data: data});
+    }, (e) => {
+        res.status(400).send(e);
+    });
+ });
+
+
+
+
 app.listen(port, () =>{
     var currdatetime = new Date();
     console.log(currdatetime);
