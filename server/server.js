@@ -24,7 +24,7 @@ var options = {
     path:'/ltaodataservice/Traffic-Images',
      headers: {
     'accept': 'application/json',
-    'AccountKey': 'TKpt3178RxCAX5/k/Tmg3w=='
+    'AccountKey': 'AccountKey'
   }
 }
 
